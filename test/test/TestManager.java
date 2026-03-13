@@ -49,14 +49,17 @@ public class TestManager {
     }
 
     @Test
-    void testMain() {
+    void Aufgabe1_ZeilenAnzahl() {
         try {
-            Tests.testMain();
+            Tests.Aufgabe1_ZeilenAnzahl();
         }
         catch (AssertionError e) {
             fail(e.getMessage());
         }
     }
+
+
+
 
 
 

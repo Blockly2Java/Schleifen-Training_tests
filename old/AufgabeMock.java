@@ -1,4 +1,4 @@
-package test;
+package src.x09p03;
 
 public class AufgabeMock
 {
@@ -21,6 +21,7 @@ public class AufgabeMock
 
     public static void aufgabe3(double start, double ende)
     {
+
         for(double i=start; i >= ende; i--)
         {
             System.out.println(i);
