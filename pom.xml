@@ -1,15 +1,62 @@
-<?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>b2j</groupId>
-  <artifactId>TestsAssignment</artifactId>
-  <version>1.0</version>
-  <name>Tests - Assignment</name>
+
+  <groupId>de.blockly2java.exercises</groupId>
+  <artifactId>inf10_a04_tests</artifactId>
+  <name>Blockly2Java Exercise 'Schleifen-Training' Tests</name>
+  <description>Contains test cases for the Schleifen-Training exercise</description>
+  <url>https://github.com/Blockly2Java/Inf10_A04_tests</url>
+  <scm>
+      <connection>scm:git:git://github.com/Blockly2Java/Inf10_A04_tests.git</connection>
+      <developerConnection>scm:git:ssh://github.com:Blockly2Java/Inf10_A04_tests.git</developerConnection>
+      <url>https://github.com/Blockly2Java/Inf10_A04_tests</url>
+  </scm>
+
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <licenses>
+    <license>
+      <name>CC BY 4.0</name>
+      <url>https://creativecommons.org/licenses/by/4.0/</url>
+    </license>
+  </licenses>
+
+  <developers>
+      <developer>
+          <id>ValentinHerrmann</id>
+          <name>Valentin Herrmann</name>
+          <email>mail@valentin-herrmann.com</email>
+      </developer>
+  </developers>
+
   <properties>
+    <maven.compiler.source>25</maven.compiler.source>
+    <maven.compiler.target>25</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javafx.version>26</javafx.version>
+    <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
     <argLine>-Dfile.encoding=UTF-8</argLine>
+    <exercise.src.dir>${project.basedir}/assignment/src</exercise.src.dir>
   </properties>
+
+  <profiles>
+    <profile>
+        <id>template</id>
+        <properties>
+            <exercise.src.dir>${project.basedir}/../template/src</exercise.src.dir>
+        </properties>
+    </profile>
+    <profile>
+        <id>solution</id>
+        <properties>
+            <exercise.src.dir>${project.basedir}/../solution/src</exercise.src.dir>
+        </properties>
+    </profile>
+  </profiles>
+
   <dependencies>
     <dependency>
       <groupId>org.assertj</groupId>
@@ -19,20 +66,8 @@
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
+      <artifactId>junit-jupiter</artifactId>
       <version>5.10.2</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.10.2</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.platform</groupId>
-      <artifactId>junit-platform-engine</artifactId>
-      <version>1.10.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -42,14 +77,14 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-    <groupId>de.tum.in.ase</groupId>
-    <artifactId>artemis-java-test-sandbox</artifactId>
-    <version>1.15.0</version>
-    <scope>test</scope>
-  </dependency>
+      <groupId>de.tum.in.ase</groupId>
+      <artifactId>artemis-java-test-sandbox</artifactId>
+      <version>1.15.0</version>
+    </dependency>
   </dependencies>
+
   <build>
-    <sourceDirectory>${project.basedir}/assignment/src</sourceDirectory>
+    <sourceDirectory>${exercise.src.dir}</sourceDirectory>
     <testSourceDirectory>${project.basedir}/test</testSourceDirectory>
     <testResources>
       <testResource>
@@ -98,16 +133,93 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.13.0</version>
         <configuration>
-          <source>17</source>
-          <target>17</target>
+          <source>25</source>
+          <target>25</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.4.2</version>
+        <configuration>
+          <classesDirectory>${project.build.testOutputDirectory}</classesDirectory>
         </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.5</version>
+      </plugin>
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.9.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <publishingServerId>central</publishingServerId>
+          <autoPublish>true</autoPublish>
+          <tokenAuth>true</tokenAuth>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.3.0</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.6.3</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+            <configuration>
+              <passphrase>${env.GPG_PASSPHRASE}</passphrase>
+              <gpgArguments>
+                <arg>--pinentry-mode</arg>
+                <arg>loopback</arg>
+              </gpgArguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.13</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
       </plugin>
     </plugins>
   </build>
